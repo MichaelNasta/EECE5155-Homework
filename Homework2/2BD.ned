@@ -28,8 +28,9 @@ simple SensorNode2BD {
 simple MobileSinkNode2BD {
 	parameters:
 	    double y=default(15);
-	    double speed=1;
+	    double speed=200;
 	    double Delta=0.001;
+		double loss_prob=1; //loss prob is added here for implementation purposes
 
 	gates:
 	    input in;
@@ -37,6 +38,9 @@ simple MobileSinkNode2BD {
 }
 
 simple WirelessChannel {
+    parameters:
+        bool enable_loss_prob=default(true);
+        
 	gates:
 	    input in_src; input in_snk;
 	    output out_src; output out_snk;
@@ -48,7 +52,9 @@ network SourceSink {
 	    double communication_range=default(50);
 	    double Tbi=0.1; //beacon interval/period
 	    double TD=0.004; //packet duration for beacons, data, acks
-	    int packets=0;
+	    int data_packets=0;
+	    int ack_packets=0;
+	    int lrbs_discovered=0;
 	    //add number of contacts?
 	    
 	submodules:
